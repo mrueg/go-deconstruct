@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/mrueg/go-deconstruct/pkg"
 	"github.com/spf13/cobra"
@@ -20,10 +21,12 @@ var deconstructCmd = &cobra.Command{
 		modFile, err := pkg.GetInfoFromBinary(args[0])
 		if err != nil {
 			fmt.Printf("%s", err)
+			os.Exit(1)
 		}
 		outputPath, err := cmd.Flags().GetString("output")
 		if err != nil {
 			fmt.Printf("%s", err)
+			os.Exit(1)
 		}
 		pkg.WriteMod(modFile, outputPath)
 
