@@ -1,4 +1,4 @@
-VERSION := 0.0.1
+VERSION := $(shell cat VERSION)
 
 .PHONY: build
 build:
