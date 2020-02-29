@@ -15,10 +15,7 @@ var (
 var rootCmd = &cobra.Command{
 	Use:   "go-deconstruct",
 	Short: "go-deconstruct is a tool to generate go.mod and go.sum from a binary",
-	Long:  `A tool to reconstruct go.mod and go.sum from a golang binary built with modules`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
-	},
+	Long:  `A tool to reconstruct go.mod and go.sum from a go binary built with modules`,
 }
 
 func Execute(version string) {

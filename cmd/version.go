@@ -12,8 +12,8 @@ func init() {
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Print the version number of go-deconstruct",
+	Short: "Prints the version number of go-deconstruct",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("go-deconstruction %s", VERSION)
+		fmt.Printf("go-deconstruct %s", VERSION)
 	},
 }
