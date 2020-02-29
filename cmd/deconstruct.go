@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mrueg/go-deconstruct/pkg"
+	"github.com/mrueg/go-deconstruct/parser"
+	"github.com/mrueg/go-deconstruct/writer"
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +19,7 @@ var deconstructCmd = &cobra.Command{
 	Short: "Generate go.mod file",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		modFile, err := pkg.GetInfoFromBinary(args[0])
+		modFile, err := parser.GetInfoFromBinary(args[0])
 		if err != nil {
 			fmt.Printf("%s", err)
 			os.Exit(1)
@@ -28,7 +29,7 @@ var deconstructCmd = &cobra.Command{
 			fmt.Printf("%s", err)
 			os.Exit(1)
 		}
-		pkg.WriteMod(modFile, outputPath)
+		writer.WriteMod(modFile, outputPath)
 
 	},
 }

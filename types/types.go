@@ -1,4 +1,4 @@
-package pkg
+package types
 
 type ModFile struct {
 	GoRelease    GoRelease

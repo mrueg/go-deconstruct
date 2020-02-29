@@ -1,9 +1,11 @@
-package pkg
+package writer
 
 import (
 	"fmt"
 	"os"
 	"text/template"
+
+	"github.com/mrueg/go-deconstruct/types"
 )
 
 const modtmpl = `
@@ -30,7 +32,7 @@ replace (
 {{- end }}
 `
 
-func WriteMod(modFile ModFile, outputPath string) error {
+func WriteMod(modFile types.ModFile, outputPath string) error {
 	var outputFile = os.Stdout
 	tmpl, err := template.New("").Parse(modtmpl)
 	if err != nil {

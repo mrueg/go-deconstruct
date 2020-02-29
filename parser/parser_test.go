@@ -1,14 +1,18 @@
-package pkg
+package parser
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/mrueg/go-deconstruct/types"
+)
 
 func TestParseGoRelease(t *testing.T) {
 	tests := []struct {
 		input  string
-		output GoRelease
+		output types.GoRelease
 		err    error
 	}{
-		{"go1.13.8", GoRelease{"1", "13", "go1.13.8"}, nil},
+		{"go1.13.8", types.GoRelease{Major: "1", Minor: "13", Name: "go1.13.8"}, nil},
 	}
 	for _, test := range tests {
 		goRelease, _ := parseGoRelease(test.input)
@@ -21,24 +25,24 @@ func TestParseGoRelease(t *testing.T) {
 func TestParseModuleInfo(t *testing.T) {
 	tests := []struct {
 		input        string
-		module       Module
-		dependencies []Dependency
-		replacements []Replacement
+		module       types.Module
+		dependencies []types.Dependency
+		replacements []types.Replacement
 		err          error
 	}{
 		{"path\tgithub.com/mrueg/go-deconstruct\nmod\tgithub.com/mrueg/go-deconstruct\t(devel)\t\ndep\tgithub.com/rsc/goversion\tv1.2.0\th1:zVF4y5ciA/rw779S62bEAq4Yif1cBc/UwRkXJ2xZyT4=\ndep\tgithub.com/spf13/cobra\tv0.0.5\th1:f0B+LkLX6DtmRH1isoNA9VTtNUK9K8xYd28JNNfOv/s=\ndep\tgithub.com/spf13/pflag\tv1.0.3\th1:zPAT6CGy6wXeQ7NtTnaTerfKOsV6V6F8agHXFiazDkg=\n",
-			Module{"github.com/mrueg/go-deconstruct"},
-			[]Dependency{Dependency{"github.com/rsc/goversion", "v1.2.0", "h1:zVF4y5ciA/rw779S62bEAq4Yif1cBc/UwRkXJ2xZyT4="},
-				Dependency{"github.com/spf13/cobra", "v0.0.5", "h1:f0B+LkLX6DtmRH1isoNA9VTtNUK9K8xYd28JNNfOv/s="},
-				Dependency{"github.com/spf13/pflag", "v1.0.3", "h1:zPAT6CGy6wXeQ7NtTnaTerfKOsV6V6F8agHXFiazDkg="}},
-			[]Replacement{},
+			types.Module{Name: "github.com/mrueg/go-deconstruct"},
+			[]types.Dependency{types.Dependency{Name: "github.com/rsc/goversion", Version: "v1.2.0", Hash: "h1:zVF4y5ciA/rw779S62bEAq4Yif1cBc/UwRkXJ2xZyT4="},
+				types.Dependency{Name: "github.com/spf13/cobra", Version: "v0.0.5", Hash: "h1:f0B+LkLX6DtmRH1isoNA9VTtNUK9K8xYd28JNNfOv/s="},
+				types.Dependency{Name: "github.com/spf13/pflag", Version: "v1.0.3", Hash: "h1:zPAT6CGy6wXeQ7NtTnaTerfKOsV6V6F8agHXFiazDkg="}},
+			[]types.Replacement{},
 			nil},
 		{"path\tgithub.com/mrueg/go-deconstruct\nmod\tgithub.com/mrueg/go-deconstruct\t(devel)\t\ndep\tgithub.com/rsc/goversion\tv1.2.0\n=>\treplacement.com/rsc/goversion\tv2.2.0\th1:zVF4y5ciA/rw779S62bEAq4Yif1cBc/UwRkXJ2xZyT4=",
-			Module{"github.com/mrueg/go-deconstruct"},
-			[]Dependency{Dependency{"github.com/rsc/goversion", "v1.2.0", ""},
-				Dependency{"github.com/spf13/cobra", "v0.0.5", "h1:f0B+LkLX6DtmRH1isoNA9VTtNUK9K8xYd28JNNfOv/s="},
-				Dependency{"github.com/spf13/pflag", "v1.0.3", "h1:zPAT6CGy6wXeQ7NtTnaTerfKOsV6V6F8agHXFiazDkg="}},
-			[]Replacement{Replacement{"github.com/rsc/goversion", "replacement.com/rsc/goversion", "v2.2.0", "h1:zVF4y5ciA/rw779S62bEAq4Yif1cBc/UwRkXJ2xZyT4="}},
+			types.Module{Name: "github.com/mrueg/go-deconstruct"},
+			[]types.Dependency{types.Dependency{Name: "github.com/rsc/goversion", Version: "v1.2.0", Hash: ""},
+				types.Dependency{Name: "github.com/spf13/cobra", Version: "v0.0.5", Hash: "h1:f0B+LkLX6DtmRH1isoNA9VTtNUK9K8xYd28JNNfOv/s="},
+				types.Dependency{Name: "github.com/spf13/pflag", Version: "v1.0.3", Hash: "h1:zPAT6CGy6wXeQ7NtTnaTerfKOsV6V6F8agHXFiazDkg="}},
+			[]types.Replacement{types.Replacement{Name: "github.com/rsc/goversion", ReplacedWith: "replacement.com/rsc/goversion", Version: "v2.2.0", Hash: "h1:zVF4y5ciA/rw779S62bEAq4Yif1cBc/UwRkXJ2xZyT4="}},
 			nil},
 	}
 	for _, test := range tests {
