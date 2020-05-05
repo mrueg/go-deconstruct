@@ -44,6 +44,9 @@ func WriteMod(modFile types.ModFile, outputPath string) error {
 			return fmt.Errorf("Unable to create file: %s", err)
 		}
 	}
-	tmpl.Execute(outputFile, modFile)
+	err = tmpl.Execute(outputFile, modFile)
+	if err != nil {
+		panic(err)
+	}
 	return nil
 }

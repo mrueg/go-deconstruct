@@ -24,17 +24,15 @@ func parseModuleInfo(moduleInfo string) (types.Module, []types.Dependency, []typ
 		// Record a dependency
 		if strings.HasPrefix(item, "dep\t") {
 			tok := strings.Split(strings.TrimPrefix(item, "dep\t"), "\t")
-			dependency := types.Dependency{}
 			if tok[0] != "" {
 				switch len(tok) {
 				case 3:
-					dependency = types.Dependency{Name: tok[0], Version: tok[1], Hash: tok[2]}
+					dependencies = append(dependencies, types.Dependency{Name: tok[0], Version: tok[1], Hash: tok[2]})
 				case 2:
-					dependency = types.Dependency{Name: tok[0], Version: tok[1], Hash: ""}
+					dependencies = append(dependencies, types.Dependency{Name: tok[0], Version: tok[1], Hash: ""})
 				default:
 					return module, dependencies, replacements, fmt.Errorf("Unknown Dependency %s", item)
 				}
-				dependencies = append(dependencies, dependency)
 			}
 		}
 

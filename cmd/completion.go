@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"os"
-
+	"fmt"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 func init() {
@@ -23,6 +23,11 @@ To configure your bash shell to load completions for each session add to your ba
 . <(bitbucket completion)
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		rootCmd.GenBashCompletion(os.Stdout)
+		err := rootCmd.GenBashCompletion(os.Stdout)
+		if err != nil {
+			fmt.Printf("%s", err)
+			os.Exit(1)
+
+		}
 	},
 }

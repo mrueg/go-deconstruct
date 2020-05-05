@@ -29,7 +29,10 @@ var deconstructCmd = &cobra.Command{
 			fmt.Printf("%s", err)
 			os.Exit(1)
 		}
-		writer.WriteMod(modFile, outputPath)
-
+		err = writer.WriteMod(modFile, outputPath)
+		if err != nil {
+			fmt.Printf("%s", err)
+			os.Exit(1)
+		}
 	},
 }
