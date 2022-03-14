@@ -48,9 +48,7 @@ func parseModuleInfo(moduleInfo string) (types.Module, []types.Dependency, []typ
 
 func parseGoRelease(release string) (types.GoRelease, error) {
 	vsn := release
-	if strings.HasPrefix(vsn, "go") {
-		vsn = strings.TrimPrefix(vsn, "go")
-	}
+	vsn = strings.TrimPrefix(vsn, "go")
 	rel := strings.Split(vsn, ".")
 
 	goRelease := types.GoRelease{Major: rel[0], Minor: rel[1], Name: release}
