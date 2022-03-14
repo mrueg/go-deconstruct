@@ -16,11 +16,11 @@ Returns:
 ```
 module github.com/mrueg/go-deconstruct
 
-go 1.16
+go 1.17
 
 require (
         github.com/rsc/goversion v1.2.0
-        github.com/spf13/cobra v1.1.3
+        github.com/spf13/cobra v1.4.0
         github.com/spf13/pflag v1.0.5
 )
 ```
